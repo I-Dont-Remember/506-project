@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/I-Dont-Remember/506-project.svg?branch=master)](https://travis-ci.org/I-Dont-Remember/506-project)
 # Lucidata - Backend Server and Website
 
 ## Summary
