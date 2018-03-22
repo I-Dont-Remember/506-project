@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/I-Dont-Remember/506-project.svg?branch=master)](https://travis-ci.org/I-Dont-Remember/506-project) [![Coverage Status](https://coveralls.io/repos/github/I-Dont-Remember/506-project/badge.svg?branch=master)](https://coveralls.io/github/I-Dont-Remember/506-project?branch=master)
 # Lucidata - Backend Server and Website
 
 ## Summary
