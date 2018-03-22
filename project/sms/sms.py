@@ -38,7 +38,7 @@ def receive(request):
 
     # try matching a user to the phone number
     try:
-        user = CustomUser.objects.get(phone=phone)
+        user = CustomUser.objects.get(phone=phone[2:])
     except ObjectDoesNotExist:
         user = None
 
@@ -97,5 +97,6 @@ def send(user, app, data):
                     data=data,
                     )
     new_message.save()
+    print('sent')
 
     return message

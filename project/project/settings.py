@@ -26,7 +26,7 @@ SECRET_KEY = 'k9ybf&f8ppge9p+w5)q9j!8rz48fjb$$##udkidq)wwa@(e&il'
 DEBUG = True
 INTERNAL_IPS = ['127.0.0.1']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
