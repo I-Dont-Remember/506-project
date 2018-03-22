@@ -27,6 +27,7 @@ This will give a (hopefully) complete guide on how to clone the repo and begin d
 4. Scripts have been made to complete the rest of the steps automatically. This will create the virtual environment, activate it, and install all dependencies.
    - Mac/Linux users can run `source develop.sh`
    - Windows users can run `develop.bat`
+
 **There is no need to complete the rest of the steps if the scripts in step 4 ran successfully**
 5. Install virtualenv with `pip install virtualenv`.
 6. Create a virtual environment with `virtualenv venv`. This creates a virtual environemnt named 'venv', allowing development in an isolated environment, where package dependencies can be managed easily.
