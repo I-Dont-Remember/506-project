@@ -1,6 +1,0 @@
-python-targets:
-  - 3
-strictness: 
-  - veryhigh
-max-line-length: 
-  - 100
