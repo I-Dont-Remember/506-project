@@ -38,7 +38,7 @@ def receive(request):
 
     # try matching a user to the phone number
     try:
-        user = CustomUser.objects.get(phone=phone)
+        user = CustomUser.objects.get(phone=phone[2:])
     except ObjectDoesNotExist:
         user = None
 
@@ -85,7 +85,7 @@ def send(user, app, data):
     # send the text
     message = client.messages.create(
         to=user.phone,
-        from_=user.twilio_phone,
+        from_='3312156629',
         body="{},{}".format(app.name,data),
     )
 
@@ -97,5 +97,6 @@ def send(user, app, data):
                     data=data,
                     )
     new_message.save()
+    print('sent')
 
     return message
