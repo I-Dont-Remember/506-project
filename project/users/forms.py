@@ -10,14 +10,12 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ('username', 'email', 'phone')
 
-    def save(self, commit=True):
-        if not commit:
-            raise NotImplementedError('Must save CustomUser before extending it!')
-        user = super(UserCreateForm, self).save(commit=True)
-        mod_user = CustomUser.get(username=user.username)
-        p.phone = self.cleaned_data['phone']
-        mod_user.save()
-        return mod_user
+    #def save(self, commit=True):
+    #        raise NotImplementedError('Must save CustomUser before extending it!')
+    #    user = super(UserCreateForm, self).save(commit=True)
+    #    mod_user = CustomUser.get(username=user.username)
+    #    mod_user.save()
+    #    return mod_user
 
 class CustomUserChangeForm(UserChangeForm):
 
