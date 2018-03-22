@@ -14,6 +14,7 @@ This repo is currently in the Iteration 1 phase, which has the following feature
   - Wikipedia
 - Basic User Authentication
   - Sign up, Sign in, Sign out
+  - Email verification and email changes/addition NOT working, but also not necessary for this Iteration.
   - Login via Facebook
   
 ## Development Environment Setup
