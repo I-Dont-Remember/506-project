@@ -58,13 +58,14 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTHENTICATION_BACKEDS = (
-    'django.contrib.auth.backends.ModelBacken',
+    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 SITE_ID = 2
 
-ACCOUNT_EMAIL_REQUIRED = True
+#ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USERNAME_REQUIRED = False
 
 MIDDLEWARE = [
