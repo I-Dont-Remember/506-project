@@ -28,7 +28,8 @@ INTERNAL_IPS = ['127.0.0.1']
 
 ALLOWED_HOSTS = ['*']
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'accounts/login'
+LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = 'home'
 
 
