@@ -64,9 +64,10 @@ AUTHENTICATION_BACKEDS = (
 
 SITE_ID = 2
 
-#ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.CustomUserCreationForm'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -148,7 +149,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = os.path.join(BASE_DIR, 'templates/static/')
+#STATIC_URL = '/static/'
 
 # Twilio settings
 TWILIO_ACCOUNT_SID = 'ACa1ec3289b225a2b60c58e4a3e5531de7'

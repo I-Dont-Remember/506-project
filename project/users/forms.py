@@ -2,20 +2,13 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(forms.Form):
 
-    phone = forms.CharField(label = 'Phone Number')
+    phone = forms.CharField(label = 'Phone Number', widget=forms.TextInput(attrs={'placeholder': 'Ex: 1234567890'}))
 
-    class Meta(UserCreationForm.Meta):
-        model = CustomUser
-        fields = ('username', 'email', 'phone')
-
-    #def save(self, commit=True):
-    #        raise NotImplementedError('Must save CustomUser before extending it!')
-    #    user = super(UserCreateForm, self).save(commit=True)
-    #    mod_user = CustomUser.get(username=user.username)
-    #    mod_user.save()
-    #    return mod_user
+    def signup(self, request, user):
+        user.phone = self.cleaned_data['phone']
+        user.save()
 
 class CustomUserChangeForm(UserChangeForm):
 
