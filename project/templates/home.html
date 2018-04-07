@@ -3,45 +3,36 @@
 <html>
 <!-- templates/home.html -->
 {% load socialaccount %}
+{% load static %}
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" />
-<link href="default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'default.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'fonts.css' %}" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 </head>
 
 <!---->
-<h1>Lucidata Home Page</h1>
-{% if user.is_authenticated %}
-<p>Welcome {{ user.username }} !!!</p>
-<p><a href="{% url 'account_logout' %}">Log out</a>
-{% else %}
-<p><a href="{% url 'account_signup' %}">Sign Up</a></p>
-<p><a href="{% url 'account_login' %}">Log In </a></p>
-<p><a href="{% provider_login_url 'facebook' %}">Log In with Facebook</a></p>
-{% endif %}
+
 <body>
 <div id="wrapper">
 	<div id="header-wrapper">
 	<div id="header" class="container">
-		<!--<div id="logo">
+		<div id="logo">
 			<h1><a href="#">Lucidata</a></h1>
 		</div>
-		-->
 		<div id="menu">
 			<ul>
-				<!-- 
+
 				<li class="current_page_item"><a href="#" accesskey="1" title="">Homepage</a></li>
-				Need to modify this part for ITERATION 1
-				
+
 				<li><a href="#" accesskey="2" title="">Our Clients</a></li>
 				<li><a href="#" accesskey="3" title="">About Us</a></li>
-				-->
+
 			</ul>
 		</div>
 	</div>
@@ -51,9 +42,16 @@
 			<div class="title">
 				<span class="byline">Lucidata, an app that allows you to access websites without using your data</span> </div>
 			<ul class="actions">
-				<!-- Log-in/Register is already on the top of the page. No need to do this.
-				<li><a href="#top">Log-in/Register</a></li>
-				-->
+
+				{% if user.is_authenticated %}
+					<p>Welcome {{ user.username }} !!!</p>
+					<p><a href="{% url 'account_logout' %}">Log out</a>
+				{% else %}
+					<li><a href="{% url 'account_login' %}">Log in</a></li>
+					<li><a href="{% provider_login_url 'facebook' %}">Log in with Facebook</a></li>
+					<li><a href="{% url 'account_signup' %}">Sign up</a></li>
+				{% endif %}
+
 			</ul>
 		</div>
 	</div>
@@ -79,13 +77,13 @@
 					<p> And More</p>
 				</div>
 			</div>
-			
+
 		</div>
 		<ul class="actions">
 			<li><a href="#top">Sign-in/Sign-up</a></li>
 		</ul>
 		<!-- Testing Done for Above
-		Remainning minor problems: 
+		Remainning minor problems:
 		1. add logos for Wikipedia, flight status and 'and more'
 		2. add other links next to 'Homepage' on the top of the screen ,which direct to different sections of the page
 		-->
