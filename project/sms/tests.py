@@ -86,8 +86,8 @@ class TestAPI(TestCase):
         '''
         #test good input of addresses
         directions = ('(112 ft) Head northeast on Adams St toward S Randall Ave;'
-                      '(0.3 mi) Turn left onto S Randall Ave;(0.3 mi) Turn left '
-                      'onto S Randall Ave. Destination will be on the right')
+                      '(0.3 mi) Turn left onto S Randall Ave. Destination will '
+                      'be on the right')
         route = "1512 Adams St, Madison WI;215 N Randall Ave, Madison WI"
         self.assertEqual(directions, dir_handler(route))
 
