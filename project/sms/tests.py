@@ -5,7 +5,7 @@ from django.conf import settings
 from users.models import CustomUser
 from .models import App
 from .sms import send, receive
-from .api_handler import api_handler, wiki_handler
+from .api_handler import api_handler, wiki_handler, dir_handler
 
 TWILIO_TRIAL = 'Sent from your Twilio trial account - '
 
@@ -79,3 +79,23 @@ class TestAPI(TestCase):
         bad_word = 'THeresNoWayThis3xists'
         bad_summary = 'No Wikipedia entry found for ' + bad_word
         self.assertEqual(bad_summary, wiki_handler(bad_word))
+
+    def test_directions(self):
+        '''
+        Test directions API
+        '''
+        #test good input of addresses
+        directions = ('(112 ft) Head northeast on Adams St toward S Randall Ave;'
+                      '(0.3 mi) Turn left onto S Randall Ave;(0.3 mi) Turn left '
+                      'onto S Randall Ave. Destination will be on the right')
+        route = "1512 Adams St, Madison WI;215 N Randall Ave, Madison WI"
+        self.assertEqual(directions, dir_handler(route))
+
+        #test good input of lat/lng coordinates
+        route = "43.066664,-89.409532;43.071456,-89.408663"
+        self.assertEqual(directions, dir_handler(route))
+
+        #test bad input
+        bad_route = "some place that doesn't exist;45"
+        bad_directions = "Directions not found for " + bad_route[:29] + " to " + bad_route[30:]
+        self.assertEqual(bad_directions, dir_handler(bad_route))

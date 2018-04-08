@@ -15,5 +15,7 @@ setup(name='django_project',
         'twilio',
         'django-twilio',
         'wikipedia',
+        'googlemaps',
+        'python-forecastio'
       ],
      )
