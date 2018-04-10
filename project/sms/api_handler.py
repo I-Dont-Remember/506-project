@@ -2,9 +2,12 @@ import wikipedia
 import googlemaps
 import re
 import forecastio
+from ohmysportsfeedspy import MySportsFeeds
 
 gmaps_key = "AIzaSyArLBOGZk0mH_VKEMUjnyvLLLNRR2w9BcA"
 forecast_key = "9acf53a7de55294989b3f3904e8a8d57"
+msf = MySportsFeeds(version="1.2")
+msf.authenticate("kvanderheiden", "lucidata506")
 
 MAX_CHAR = 156
 
@@ -87,22 +90,25 @@ def weather_handler(data):
     (each separated by ';').
     '''
 
-    loc_type = data[0]
-    forecast_type = data[1]
-    loc = data[2:]
+    loc_type = data[0]   #indicates whether location is a coordinate ('c') or address('a')
+    forecast_type = data[1]   #indicates whether forecast should be alert('a'), 24-hour('2'), or 7-day('7')
+    loc = data[2:]   #location for which to get forecast
     forecast = ''
     
     if loc_type == 'c':
         loc = loc.split(';')
         lat = loc[0]
         lng = loc[1]
+
+    #if address is provided, geocode to lat/lng coordinates
     elif loc_type == 'a':
         gmapsResponse = googlemaps.geocoding.geocode(cli, loc)
         lat = gmapsResponse[0]['geometry']['location']['lat']
         lng = gmapsResponse[0]['geometry']['location']['lng']
 
-    response = forecastio.load_forecast(forecast_key, lat=lat, lng=lng,units="us")
+    response = forecastio.load_forecast(forecast_key,lat=lat,lng=lng,units="us")
 
+    #get alerts
     if forecast_type == 'a':
         alerts = response.alerts()
         if len(alerts) != 0:
@@ -112,6 +118,7 @@ def weather_handler(data):
         else:
             forecast = "No weather alerts"
         
+    #get 24-hour forecast
     elif forecast_type == '2':
         hourly = response.hourly().data
         for hour in hourly:
@@ -124,6 +131,7 @@ def weather_handler(data):
                 forecast = forecast[:-1]
             forecast = forecast + '/'
 
+    #get 7-day forecast
     elif forecast_type == '7':
         daily = response.daily().data
         for day in daily:
@@ -139,4 +147,64 @@ def weather_handler(data):
 
     return forecast
 
-#def sports_handler(data):
+def sports_handler(data):
+    '''
+    Calls to MySportsFeeds API are made here to gather information about games.
+    Data should be a string that includes the league ('b' for NBA, 'f' for NFL,
+    'h' for NHL, or 'm' for MLB), followed by the date (formatted as yyyymmdd).
+    Returns a string with information about each game in the specified league
+    on the given date. Each game is separated by '/'. Each piece of game information
+    is separated by ';'. The first two elements for each game are the name of the away
+    team and the name of the home team. The next element is the status (a time if the game
+    has not been played yet, 'p' if the game is in progress, or 'f' if the game is finished).
+    If the game is finished, there will be two more elements: the away team's score and
+    the home team's score.
+    '''
+    start_time = ''
+    away_score = ''
+    home_score = ''
+    away_team = ''
+    home_team = ''
+    response = ''
+
+
+    league = data[0]
+    if(data[0] == 'b'):
+        league = 'nba'
+    elif(data[0] == 'f'):
+        league = 'nfl'
+    elif(data[0] == 'h'):
+        league = 'nhl'
+    elif(data[0] == 'm'):
+        league = 'mlb'
+
+    date = data[1:9]    #date formatted as yyyymmdd
+
+    try:
+        stats = msf.msf_get_data(league=league, season='current', feed='scoreboard', format='json', fordate=date)
+        game_stats = stats['scoreboard']['gameScore']
+    except:
+        return ('No ' + league + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4])
+
+    
+    for game in game_stats:
+        away_team = game['game']['awayTeam']['Name']
+        home_team = game['game']['homeTeam']['Name']
+        if game['isUnplayed'] == 'true':
+            start_time = game['game']['time']
+        elif game['isInProgress'] == 'true':
+            start_time = 'p'
+        elif game['isCompleted'] == 'true':
+            start_time = 'f'
+            away_score = game['awayScore']
+            home_score = game['homeScore']
+        response = response + away_team + ';'
+        response = response + home_team + ';'
+        response = response + start_time + ';'
+        if(away_score != '' and home_score != ''):
+            response = response + away_score + ';'
+            response = response + home_score + ';'
+        response = response[:-1] + '/'
+    response = response[:-1]
+
+    return response

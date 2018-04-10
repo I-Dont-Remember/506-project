@@ -16,6 +16,8 @@ setup(name='django_project',
         'django-twilio',
         'wikipedia',
         'googlemaps',
-        'python-forecastio'
+        'python-forecastio',
+        'ohmysportsfeedspy',
+        'simplejson'
       ],
      )
