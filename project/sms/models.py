@@ -33,4 +33,5 @@ class App(models.Model):
     References an application supported (google maps, wiki, etc.)
     '''
     name = models.CharField(max_length=1600)
+    code = models.CharField(max_length=5, default='x')
     # add more things here like api links, or function names, etc

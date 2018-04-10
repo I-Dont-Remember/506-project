@@ -29,7 +29,6 @@ def receive(request):
     Return the http response
     '''
     # EXAMPLE USING TWILIO
-
     # parse the http request to get message content
     phone = request.POST.get('From', '')
     body = request.POST.get('Body', '').split(',')
@@ -44,7 +43,7 @@ def receive(request):
 
     # try matching an app, this should work unless we did something bad
     try:
-        app = App.objects.get(name=app)
+        app = App.objects.get(code=app)
     except:
         app = None
 
@@ -85,7 +84,7 @@ def send(user, app, data):
     # send the text
     message = client.messages.create(
         to=user.phone,
-        from_=user.twilio_phone,
+        from_='13312156629',
         body="{},{}".format(app.name,data),
     )
 
@@ -97,6 +96,5 @@ def send(user, app, data):
                     data=data,
                     )
     new_message.save()
-    print('sent')
 
     return message
