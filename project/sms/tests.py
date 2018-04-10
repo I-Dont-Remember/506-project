@@ -118,8 +118,8 @@ class TestAPI(TestCase):
         self.assertEqual(scoreboard, sports_handler(league + date))
 
         #test a day where there are no games for the given league
-        league = 'f'
+        league_short = 'f'
+        league_long = 'nfl'
         date = '20180408'
-        no_games = 'No ' + league + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4]
-        self.assertEqual(no_games, sports_handler(league + date))
-
+        no_games = 'No ' + league_long + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4]
+        self.assertEqual(no_games, sports_handler(league_short + date))

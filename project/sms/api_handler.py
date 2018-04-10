@@ -166,7 +166,6 @@ def sports_handler(data):
     away_team = ''
     home_team = ''
     response = ''
-    print (data)
 
     league = data[0]
     if(data[0] == 'b'):
@@ -177,9 +176,7 @@ def sports_handler(data):
         league = 'nhl'
     elif(data[0] == 'm'):
         league = 'mlb'
-    print (league)
     date = data[1:9]    #date formatted as yyyymmdd
-    print (date)
     try:
         stats = msf.msf_get_data(league=league, season='current', feed='scoreboard', format='json', fordate=date)
         game_stats = stats['scoreboard']['gameScore']
