@@ -60,12 +60,12 @@ def dir_handler(data):
     data = data.split(';')
     start_loc = data[0]
     dest_loc = data[1]
-    
+
     try:
         dir_response = googlemaps.directions.directions(cli, origin=start_loc, destination=dest_loc)
     except googlemaps.exceptions.ApiError:
         return "Directions not found for " + start_loc + " to " + dest_loc
-    
+
     steps = dir_response[0]['legs'][0]['steps']
 
     for step in steps:
@@ -83,10 +83,10 @@ def weather_handler(data):
     followed by the forecast type ('a' for alerts; '2' for 24-hour; '7' for 7-day), followed by
     the location (formatted as lat;lng or an address). Returns a string of weather data. For alerts,
     if there are mulitple alerts they are separated by '//'. Each alert is just a single description.
-    For 24-hour, hours are separated by '/'. Each hour has a desciprtion, followed by the temperature, 
-    followed optionally by a precipitation type and precipitation probability (each separated by ';'). 
-    For 7-day, days are separated by '/'. Each day has a description, followed by the high temp, 
-    followed by the low temp, followed optionally by a precipitation type and precipitation probability 
+    For 24-hour, hours are separated by '/'. Each hour has a desciprtion, followed by the temperature,
+    followed optionally by a precipitation type and precipitation probability (each separated by ';').
+    For 7-day, days are separated by '/'. Each day has a description, followed by the high temp,
+    followed by the low temp, followed optionally by a precipitation type and precipitation probability
     (each separated by ';').
     '''
 
@@ -94,7 +94,7 @@ def weather_handler(data):
     forecast_type = data[1]   #indicates whether forecast should be alert('a'), 24-hour('2'), or 7-day('7')
     loc = data[2:]   #location for which to get forecast
     forecast = ''
-    
+
     if loc_type == 'c':
         loc = loc.split(';')
         lat = loc[0]
@@ -117,7 +117,7 @@ def weather_handler(data):
             forecast = forecast[:-2]
         else:
             forecast = "No weather alerts"
-        
+
     #get 24-hour forecast
     elif forecast_type == '2':
         hourly = response.hourly().data
@@ -166,7 +166,7 @@ def sports_handler(data):
     away_team = ''
     home_team = ''
     response = ''
-
+    print (data)
 
     league = data[0]
     if(data[0] == 'b'):
@@ -177,16 +177,16 @@ def sports_handler(data):
         league = 'nhl'
     elif(data[0] == 'm'):
         league = 'mlb'
-
+    print (league)
     date = data[1:9]    #date formatted as yyyymmdd
-
+    print (date)
     try:
         stats = msf.msf_get_data(league=league, season='current', feed='scoreboard', format='json', fordate=date)
         game_stats = stats['scoreboard']['gameScore']
     except:
         return ('No ' + league + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4])
 
-    
+
     for game in game_stats:
         away_team = game['game']['awayTeam']['Name']
         home_team = game['game']['homeTeam']['Name']
