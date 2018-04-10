@@ -5,7 +5,7 @@ from django.conf import settings
 from users.models import CustomUser
 from .models import App
 from .sms import send, receive
-from .api_handler import api_handler, wiki_handler, dir_handler
+from .api_handler import api_handler, wiki_handler, dir_handler, weather_handler, sports_handler
 
 TWILIO_TRIAL = 'Sent from your Twilio trial account - '
 
@@ -99,3 +99,27 @@ class TestAPI(TestCase):
         bad_route = "some place that doesn't exist;45"
         bad_directions = "Directions not found for " + bad_route[:29] + " to " + bad_route[30:]
         self.assertEqual(bad_directions, dir_handler(bad_route))
+
+    def test_weather(self):
+        '''
+        Test weather API
+        '''
+
+    def test_sports(self):
+        '''
+        Test sports API
+        '''
+        league = 'b'
+        date = '20180408'
+        scoreboard = ('Mavericks;76ers;f;97;109/Pacers;Hornets;f;123;117/'
+                      'Hawks;Celtics;f;112;106/Pistons;Grizzlies;f;117;130/'
+                      'Magic;Raptors;f;101;112/Jazz;Lakers;f;112;97/'
+                      'Warriors;Suns;f;117;100')
+        self.assertEqual(scoreboard, sports_handler(league + date))
+
+        #test a day where there are no games for the given league
+        league = 'f'
+        date = '20180408'
+        no_games = 'No ' + league + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4]
+        self.assertEqual(no_games, sports_handler(league + date))
+
