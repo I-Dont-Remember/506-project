@@ -6,7 +6,7 @@ from ohmysportsfeedspy import MySportsFeeds
 
 gmaps_key = "AIzaSyArLBOGZk0mH_VKEMUjnyvLLLNRR2w9BcA"
 forecast_key = "9acf53a7de55294989b3f3904e8a8d57"
-msf = MySportsFeeds(version="1.2")
+msf = MySportsFeeds(version="1.2", store_type=None, store_location=None)
 msf.authenticate("kvanderheiden", "lucidata506")
 
 MAX_CHAR = 156
@@ -177,12 +177,12 @@ def sports_handler(data):
     elif(data[0] == 'm'):
         league = 'mlb'
     date = data[1:9]    #date formatted as yyyymmdd
+
     try:
-        stats = msf.msf_get_data(league=league, season='current', feed='scoreboard', format='json', fordate=date)
+        stats = msf.msf_get_data(league=league, season='current', feed='scoreboard', format='json', fordate=date, force='true')
         game_stats = stats['scoreboard']['gameScore']
     except:
         return ('No ' + league + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4])
-
 
     for game in game_stats:
         away_team = game['game']['awayTeam']['Name']
