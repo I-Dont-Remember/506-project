@@ -45,15 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'debug_toolbar',
+    'crispy_forms',
+
+    'pages',
+    'sms',
+    'users',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
 
-    'pages',
-    'sms',
-    'users',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -69,6 +71,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.CustomUserCreationForm'
+ACCOUNT_FORMS = {
+    #'login': 'users.forms.CustomLoginForm',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

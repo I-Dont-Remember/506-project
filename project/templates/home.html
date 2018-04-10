@@ -1,42 +1,6 @@
-
-<!DOCTYPE html>
-<html>
-<!-- templates/home.html -->
-{% load socialaccount %}
-{% load static %}
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" />
-<link href="{% static 'default.css' %}" rel="stylesheet" type="text/css" media="all" />
-<link href="{% static 'fonts.css' %}" rel="stylesheet" type="text/css" media="all" />
-
-<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-</head>
-
-<!---->
-
-<body>
-<div id="wrapper">
-	<div id="header-wrapper">
-	<div id="header" class="container">
-		<div id="logo">
-			<h1><a href="#">Lucidata</a></h1>
-		</div>
-		<div id="menu">
-			<ul>
-
-				<li class="current_page_item"><a href="#" accesskey="1" title="">Homepage</a></li>
-
-				<li><a href="#" accesskey="2" title="">Our Clients</a></li>
-				<li><a href="#" accesskey="3" title="">About Us</a></li>
-
-			</ul>
-		</div>
-	</div>
-	</div>
+{% extends 'base.html' %}
+	{% load socialaccount %}
+	{% block content %}
 	<div id="banner">
 		<div class="container">
 			<div class="title">
@@ -47,8 +11,15 @@
 					<p>Welcome {{ user.username }} !!!</p>
 					<p><a href="{% url 'account_logout' %}">Log out</a>
 				{% else %}
-					<li><a href="{% url 'account_login' %}">Log in</a></li>
-					<li><a href="{% provider_login_url 'facebook' %}">Log in with Facebook</a></li>
+					<!--<li><a href="{% url 'account_login' %}">Log in</a></li>
+					<li><a href="{% provider_login_url 'facebook' %}">Log in with Facebook</a></li>-->
+					<li><form action="/accounts/login/" method="post">
+    					{% csrf_token %}
+    					{{ login_form.as_p }}
+    					<input type="submit" value="Login" />
+							</form>
+					</li>
+					<li>or</li>
 					<li><a href="{% url 'account_signup' %}">Sign up</a></li>
 				{% endif %}
 
@@ -97,7 +68,7 @@
 			<p>We are a group of UW Madison students working on this application as our course project and hopefully it works out well.</p>
 		</div>
 		<ul class="actions">
-			<li><a href="#top">Sign-in/Sign-up</a></li>
+			<li><a href="{% url 'about_us' %}">Our Team</a></li>
 		</ul>
 	</div>
 	<div id="page" class="container">
@@ -113,8 +84,4 @@
 		</ul>
 	</div>
 </div>
-</div>
-</body>
-<!---->
-
-</html>
+{% endblock %}

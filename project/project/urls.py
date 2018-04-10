@@ -13,6 +13,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
 
     # django-allauth account urls
+    #path('accounts/login/', CustomLoginView.as_view(), 'account_login'),
     path('accounts/', include('allauth.urls')),
 ]
 

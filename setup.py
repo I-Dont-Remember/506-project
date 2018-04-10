@@ -18,6 +18,7 @@ setup(name='django_project',
         'googlemaps',
         'python-forecastio',
         'ohmysportsfeedspy',
-        'simplejson'
+        'simplejson',
+        'django-crispy-forms',
       ],
      )

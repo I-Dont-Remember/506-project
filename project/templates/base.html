@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<!-- templates/base.html -->
+{% load socialaccount %}
+{% load static %}
+{% load crispy_forms_tags %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" />
+<link href="{% static 'default.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'fonts.css' %}" rel="stylesheet" type="text/css" media="all" />
+
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+</head>
+
+<!---->
+
+<body>
+<div id="wrapper">
+	<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1><a href="{% url 'home' %}">Lucidata</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li class="current_page_item"><a href="{% url 'home' %}" accesskey="1" title="">Homepage</a></li>
+				<li><a href="clients" accesskey="2" title="">Our Clients</a></li>
+				<li><a href='about_us' accesskey="3" title="">About Us</a></li>
+        {% if user.is_authenticated %}
+          <li><a href='profile' accesskey="4" title="">Hi, {{user.username}}!</a></li>
+          <li><a href="{% url 'account_logout' %}">Log out</a></li>
+        {% endif %}
+			</ul>
+		</div>
+	</div>
+	</div>
+  {% block content %}
+  {% endblock %}
+</div>
+</body>
+<!---->
+
+</html>
