@@ -84,15 +84,23 @@ class TestAPI(TestCase):
         '''
         Test directions API
         '''
-        #test good input of addresses
+        #test good input of addresses for origin and destination
         directions = ('(112 ft) Head northeast on Adams St toward S Randall Ave;'
                       '(0.3 mi) Turn left onto S Randall Ave. Destination will '
                       'be on the right')
         route = "1512 Adams St, Madison WI;215 N Randall Ave, Madison WI"
         self.assertEqual(directions, dir_handler(route))
 
-        #test good input of lat/lng coordinates
+        #test good input of lat/lng coordinates for origin and destination
         route = "43.066664,-89.409532;43.071456,-89.408663"
+        self.assertEqual(directions, dir_handler(route))
+
+        #test good input of address for origin and lat/lng for destination
+        route = "1512 Adams St, Madison WI;43.071456,-89.408663"
+        self.assertEqual(directions, dir_handler(route))
+
+        #test good input of lat/lng for origin and address for destination
+        route = "43.066664,-89.409532;215 N Randall Ave, Madison WI"
         self.assertEqual(directions, dir_handler(route))
 
         #test bad input
@@ -104,6 +112,29 @@ class TestAPI(TestCase):
         '''
         Test weather API
         '''
+        address = '215 N Randall Ave, Madison WI'
+        coordinates = '43.071456,-89.408663'
+
+        #test good input of address for 24-hour forecast
+        response = weather_handler('a2' + address)
+        response = response.split('/')
+        self.assertEqual(24, len(response))
+
+        #test good input of coordinates for 24-hour forecast
+        response = weather_handler('c2' + coordinates)
+        response = response.split('/')
+        self.assertEqual(24, len(response))
+
+        #test good input of address for 7-day forecast
+        response = weather_handler('a7' + address)
+        response = response.split('/')
+        self.assertEqual(7, len(response))
+
+        #test good input of coordinates for 7-day forecast
+        response = weather_handler('c7' + coordinates)
+        response = response.split('/')
+        self.assertEqual(7, len(response))
+
 
     def test_sports(self):
         '''

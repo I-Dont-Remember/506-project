@@ -81,7 +81,7 @@ def weather_handler(data):
     Calls to the Dark Sky API are made here to gather weather forecasts.
     Data should be a string that includes the location type ('c' for lat/lng; 'a' for an address),
     followed by the forecast type ('a' for alerts; '2' for 24-hour; '7' for 7-day), followed by
-    the location (formatted as lat;lng or an address). Returns a string of weather data. For alerts,
+    the location (formatted as lat,lng or an address). Returns a string of weather data. For alerts,
     if there are mulitple alerts they are separated by '//'. Each alert is just a single description.
     For 24-hour, hours are separated by '/'. Each hour has a desciprtion, followed by the temperature,
     followed optionally by a precipitation type and precipitation probability (each separated by ';').
@@ -96,17 +96,23 @@ def weather_handler(data):
     forecast = ''
 
     if loc_type == 'c':
-        loc = loc.split(';')
+        loc = loc.split(',')
         lat = loc[0]
         lng = loc[1]
 
     #if address is provided, geocode to lat/lng coordinates
     elif loc_type == 'a':
-        gmapsResponse = googlemaps.geocoding.geocode(cli, loc)
+        try:
+            gmapsResponse = googlemaps.geocoding.geocode(cli, loc)
+        except:
+            return ('Forecast could not be found for the given location')
         lat = gmapsResponse[0]['geometry']['location']['lat']
         lng = gmapsResponse[0]['geometry']['location']['lng']
 
-    response = forecastio.load_forecast(forecast_key,lat=lat,lng=lng,units="us")
+    try:
+        response = forecastio.load_forecast(forecast_key,lat=lat,lng=lng,units="us")
+    except:
+        return ('Forecast could not be found for the given location')
 
     #get alerts
     if forecast_type == 'a':
@@ -120,7 +126,7 @@ def weather_handler(data):
 
     #get 24-hour forecast
     elif forecast_type == '2':
-        hourly = response.hourly().data
+        hourly = response.hourly().data[:23]
         for hour in hourly:
             forecast = forecast + hour.icon + ';'
             forecast = forecast + str(round(hour.temperature)) + ';'
@@ -133,7 +139,7 @@ def weather_handler(data):
 
     #get 7-day forecast
     elif forecast_type == '7':
-        daily = response.daily().data
+        daily = response.daily().data[:6]
         for day in daily:
             forecast = forecast + day.icon + ';'
             forecast = forecast + str(round(day.temperatureHigh)) + ';'
