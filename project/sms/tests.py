@@ -142,10 +142,9 @@ class TestAPI(TestCase):
         '''
         league = 'b'
         date = '20180408'
-        scoreboard = ('Mavericks;76ers;f;97;109/Pacers;Hornets;f;123;117/'
-                      'Hawks;Celtics;f;112;106/Pistons;Grizzlies;f;117;130/'
-                      'Magic;Raptors;f;101;112/Jazz;Lakers;f;112;97/'
-                      'Warriors;Suns;f;117;100')
+        scoreboard = ('DAL;PHI;f;97;109/IND;CHA;f;123;117/ATL;BOS;f;112;106/'
+                      'DET;MEM;f;117;130/ORL;TOR;f;101;112/UTA;LAL;f;112;97/'
+                      'GSW;PHX;f;117;100')
         self.assertEqual(scoreboard, sports_handler(league + date))
 
         #test a day where there are no games for the given league
