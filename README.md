@@ -55,6 +55,8 @@ This will give a (hopefully) complete guide on how to clone the repo and begin d
 3. Run the command `python project/manage.py runserver`. This will start a server at the localhost (127.0.0.1:8000).
    - You can optionally broadcast the server to anyone on the network with `python manage.py runserver 0.0.0.0:8000` or any other port, as long as the '0.0.0.0' is specified.
 
+*Please note that the static files (i.e. css and fonts) may not load correctly or the same on every machine. This has been noted on Windows specifically. We have yet to find a solution to this so that every different environment will produce the same results.*
+
 ## Testing
 Testing is run via Django's testing framework, which is built on top of Unittest. These tests can be found in the various app directories under the 'tests.py' files. Testing is automatically run by Travis daily and new commits, but can be run locally using the following steps.
 1. First go through the [Development Environment Setup](##Development-Environment-Setup) section.
