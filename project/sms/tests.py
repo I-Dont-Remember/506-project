@@ -141,10 +141,8 @@ class TestAPI(TestCase):
         Test sports API
         '''
         league = 'b'
-        date = '20180408'
-        scoreboard = ('DAL;PHI;f;97;109/IND;CHA;f;123;117/ATL;BOS;f;112;106/'
-                      'DET;MEM;f;117;130/ORL;TOR;f;101;112/UTA;LAL;f;112;97/'
-                      'GSW;PHX;f;117;100')
+        date = '20180423'
+        scoreboard = ('HOU;MIN;8:00PM/OKL;UTA;10:30PM')
         self.assertEqual(scoreboard, sports_handler(league + date))
 
         #test a day where there are no games for the given league
