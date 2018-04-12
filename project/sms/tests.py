@@ -19,7 +19,7 @@ class TestSmsSend(TestCase):
         '''
         # dummy objects for testings
         CustomUser.objects.create(username='dummy', phone='6306990113', twilio_phone='15005550006')
-        App.objects.create(name='dummy')
+        App.objects.create(name='dummy',code='d')
 
     def test_basic_send(self):
         '''
@@ -33,7 +33,7 @@ class TestSmsSend(TestCase):
         body = 'TestMessage Hi!'
         msg = send(user, app, body)
         self.assertEqual(msg.status, 'queued')
-        self.assertEqual(msg.body, TWILIO_TRIAL + app.name + ',' + body)
+        self.assertEqual(msg.body, TWILIO_TRIAL + app.code + ',' + body)
         self.assertEqual(msg.to, '+1' + user.phone)
 
 class TestSmsReceive(TestCase):
