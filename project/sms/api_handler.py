@@ -160,8 +160,8 @@ def sports_handler(data):
     'h' for NHL, or 'm' for MLB), followed by the date (formatted as yyyymmdd).
     Returns a string with information about each game in the specified league
     on the given date. Each game is separated by '/'. Each piece of game information
-    is separated by ';'. The first two elements for each game are the name of the away
-    team and the name of the home team. The next element is the status (a time if the game
+    is separated by ';'. The first two elements for each game are the abbreviation of the away
+    team and the abbreviation of the home team. The next element is the status (a time if the game
     has not been played yet, 'p' if the game is in progress, or 'f' if the game is finished).
     If the game is finished, there will be two more elements: the away team's score and
     the home team's score.
@@ -191,8 +191,8 @@ def sports_handler(data):
         return ('No ' + league + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4])
 
     for game in game_stats:
-        away_team = game['game']['awayTeam']['Name']
-        home_team = game['game']['homeTeam']['Name']
+        away_team = game['game']['awayTeam']['Abbreviation']
+        home_team = game['game']['homeTeam']['Abbreviation']
         if game['isUnplayed'] == 'true':
             start_time = game['game']['time']
         elif game['isInProgress'] == 'true':
