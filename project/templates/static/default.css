@@ -247,16 +247,12 @@
 	.box1,
 	.box2,
 	.box3,
+	.box4
 	{
 		float: left;
 		margin-right: 10px;
 	}
-	
-	.box4
-	{
-		float: left;
-		margin-left: 10px;
-	}
+
 	
 /*********************************************************************************/
 /* 3-column                                                                      */
