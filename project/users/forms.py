@@ -27,6 +27,7 @@ class CustomUserCreationForm(forms.Form):
 
     def signup(self, request, user):
         user.phone = self.cleaned_data['phone']
+        user.twilio_phone = '13312156629'
         user.save()
 
 class CustomUserChangeForm(UserChangeForm):
