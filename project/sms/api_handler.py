@@ -116,16 +116,18 @@ def weather_handler(data):
 
     #get alerts
     if forecast_type == 'a':
+        forecast = 'a'
         alerts = response.alerts()
         if len(alerts) != 0:
             for alert in alerts:
                 forecast = forecast + alert.title + '//'
             forecast = forecast[:-2]
         else:
-            forecast = "No weather alerts"
+            forecast = forecast + "No weather alerts"
 
     #get 24-hour forecast
     elif forecast_type == '2':
+        forecast = '2'
         hourly = response.hourly().data[:23]
         for hour in hourly:
             forecast = forecast + hour.icon + ';'
@@ -139,6 +141,7 @@ def weather_handler(data):
 
     #get 7-day forecast
     elif forecast_type == '7':
+        forecast = '7'
         daily = response.daily().data[:6]
         for day in daily:
             forecast = forecast + day.icon + ';'
@@ -185,7 +188,7 @@ def sports_handler(data):
     date = data[1:9]    #date formatted as yyyymmdd
 
     try:
-        stats = msf.msf_get_data(league=league, season='current', feed='scoreboard', format='json', fordate=date, force='true')
+        stats = msf.msf_get_data(league=league, season='latest', feed='scoreboard', format='json', fordate=date, force='true')
         game_stats = stats['scoreboard']['gameScore']
     except:
         return ('No ' + league + ' games found on ' + date[4:6] + '/' + date[6:8] + '/' + date[0:4])
