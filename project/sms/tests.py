@@ -62,18 +62,20 @@ class TestAPI(TestCase):
         '''
         Test case setup
         '''
-        pass
+        self.app = App.objects.create()
 
     def test_wikipedia(self):
         '''
         Test wikipedia API
         '''
+        self.app.name = 'wikipedia'
         # test good input
         summary = ('The potato is a starchy, tuberous crop from the perennial '
                    'nightshade Solanum tuberosum. Potato may be applied to both '
                    'the plant and the edible tuber. Pot...'
                   )
-        self.assertEqual(summary, wiki_handler('potato'))
+        #self.assertEqual(summary, wiki_handler('potato'))
+        self.assertEqual(summary, api_handler(self.app, 'potato'))
 
         # test bad input
         bad_word = 'THeresNoWayThis3xists'
@@ -84,6 +86,7 @@ class TestAPI(TestCase):
         '''
         Test directions API
         '''
+        self.app.name = 'directions'
         #test good input of addresses for origin and destination
         directions = ('(112 ft) Head northeast on Adams St toward S Randall Ave;'
                       '(0.3 mi) Turn left onto S Randall Ave. Destination will '
@@ -112,6 +115,7 @@ class TestAPI(TestCase):
         '''
         Test weather API
         '''
+        self.app.name = 'weather'
         address = '215 N Randall Ave, Madison WI'
         coordinates = '43.071456,-89.408663'
 
@@ -140,6 +144,7 @@ class TestAPI(TestCase):
         '''
         Test sports API
         '''
+        self.app.name = 'sports'
         league = 'b'
         date = '20180423'
         scoreboard = ('HOU;MIN;8:00PM/OKL;UTA;10:30PM')
