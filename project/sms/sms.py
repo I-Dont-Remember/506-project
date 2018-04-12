@@ -85,7 +85,7 @@ def send(user, app, data):
     message = client.messages.create(
         to=user.phone,
         from_=user.twilio_phone,
-        body="{},{}".format(app.name,data),
+        body="{},{}".format(app.code,data),
     )
 
     # create and save a db instance for our records

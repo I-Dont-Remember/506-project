@@ -19,7 +19,7 @@ class TestSmsSend(TestCase):
         '''
         # dummy objects for testings
         CustomUser.objects.create(username='dummy', phone='6306990113', twilio_phone='15005550006')
-        App.objects.create(name='dummy')
+        App.objects.create(name='dummy',code='d')
 
     def test_basic_send(self):
         '''
@@ -33,7 +33,7 @@ class TestSmsSend(TestCase):
         body = 'TestMessage Hi!'
         msg = send(user, app, body)
         self.assertEqual(msg.status, 'queued')
-        self.assertEqual(msg.body, TWILIO_TRIAL + app.name + ',' + body)
+        self.assertEqual(msg.body, TWILIO_TRIAL + app.code + ',' + body)
         self.assertEqual(msg.to, '+1' + user.phone)
 
 class TestSmsReceive(TestCase):
@@ -62,18 +62,20 @@ class TestAPI(TestCase):
         '''
         Test case setup
         '''
-        pass
+        self.app = App.objects.create()
 
     def test_wikipedia(self):
         '''
         Test wikipedia API
         '''
+        self.app.name = 'wikipedia'
         # test good input
         summary = ('The potato is a starchy, tuberous crop from the perennial '
                    'nightshade Solanum tuberosum. Potato may be applied to both '
                    'the plant and the edible tuber. Pot...'
                   )
-        self.assertEqual(summary, wiki_handler('potato'))
+        #self.assertEqual(summary, wiki_handler('potato'))
+        self.assertEqual(summary, api_handler(self.app, 'potato'))
 
         # test bad input
         bad_word = 'THeresNoWayThis3xists'
@@ -84,6 +86,7 @@ class TestAPI(TestCase):
         '''
         Test directions API
         '''
+        self.app.name = 'directions'
         #test good input of addresses for origin and destination
         directions = ('(112 ft) Head northeast on Adams St toward S Randall Ave;'
                       '(0.3 mi) Turn left onto S Randall Ave. Destination will '
@@ -112,6 +115,7 @@ class TestAPI(TestCase):
         '''
         Test weather API
         '''
+        self.app.name = 'weather'
         address = '215 N Randall Ave, Madison WI'
         coordinates = '43.071456,-89.408663'
 
@@ -140,11 +144,10 @@ class TestAPI(TestCase):
         '''
         Test sports API
         '''
+        self.app.name = 'sports'
         league = 'b'
-        date = '20180408'
-        scoreboard = ('DAL;PHI;f;97;109/IND;CHA;f;123;117/ATL;BOS;f;112;106/'
-                      'DET;MEM;f;117;130/ORL;TOR;f;101;112/UTA;LAL;f;112;97/'
-                      'GSW;PHX;f;117;100')
+        date = '20180423'
+        scoreboard = ('HOU;MIN;8:00PM/OKL;UTA;10:30PM')
         self.assertEqual(scoreboard, sports_handler(league + date))
 
         #test a day where there are no games for the given league
