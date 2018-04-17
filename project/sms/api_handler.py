@@ -71,7 +71,7 @@ def dir_handler(data):
     for step in steps:
         formatted = re.sub('<div.*?>', '. ', step['html_instructions'])
         formatted = re.sub('<.*?>', '', formatted)
-        dir = dir + '(' + step['distance']['text'] + ') ' + formatted + ';'
+        dir = dir + '(' + step['distance']['text'] + ')' + formatted + ';'
     dir = dir[:-1]
 
     return dir
