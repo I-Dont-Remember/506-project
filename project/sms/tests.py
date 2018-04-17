@@ -88,8 +88,8 @@ class TestAPI(TestCase):
         '''
         self.app.name = 'directions'
         #test good input of addresses for origin and destination
-        directions = ('(112 ft) Head northeast on Adams St toward S Randall Ave;'
-                      '(0.3 mi) Turn left onto S Randall Ave. Destination will '
+        directions = ('(112 ft)Head northeast on Adams St toward S Randall Ave;'
+                      '(0.3 mi)Turn left onto S Randall Ave. Destination will '
                       'be on the right')
         route = "1512 Adams St, Madison WI;215 N Randall Ave, Madison WI"
         self.assertEqual(directions, dir_handler(route))
