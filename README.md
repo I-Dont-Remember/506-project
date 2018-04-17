@@ -62,3 +62,10 @@ Testing is run via Django's testing framework, which is built on top of Unittest
 1. First go through the [Development Environment Setup](##Development-Environment-Setup) section.
 2. Testing is done using tox, and must be installed using `pip install tox`.
 3. Run the tests with `tox`. Or run `python project/manage.py test <app>` to run the tests in a certain app's directory such as `sms`
+
+
+## Setting up with Mobile Client
+1. Run server on localhost:8000
+2. Run ./ngrok 8000
+3. Change twilio api handler to <ngrok_website>/sms/receive
+4. Create a valid user with the phone number of the mobile client (no duplicate users for now)
