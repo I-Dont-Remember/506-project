@@ -33,7 +33,7 @@ class TestSmsSend(TestCase):
         body = 'TestMessage Hi!'
         msg = send(user, app, body)
         self.assertEqual(msg.status, 'queued')
-        self.assertEqual(msg.body, TWILIO_TRIAL + app.code + ',' + body)
+        self.assertEqual(msg.body, TWILIO_TRIAL + app.code + body)
         self.assertEqual(msg.to, '+1' + user.phone)
 
 class TestSmsReceive(TestCase):
