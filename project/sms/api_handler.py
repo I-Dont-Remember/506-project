@@ -59,6 +59,8 @@ def dir_handler(data):
     dir = ''
     data = data.split(';')
     start_loc = data[0]
+    if(len(data) < 2):
+        return "Please enter a destination"
     dest_loc = data[1]
 
     try:
