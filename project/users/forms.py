@@ -11,7 +11,7 @@ class CustomLoginForm(forms.Form):
         #    pass
 my_default_phone_number_errors = {
     'required': 'This field is required',
-    'invalid': 'Enter a 10-digit phone number below'
+    'invalid': 'Enter a 10-digit phone number below.'
 }
 class PhoneChangeForm(forms.Form):
 
