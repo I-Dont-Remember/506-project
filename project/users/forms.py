@@ -9,13 +9,18 @@ class CustomLoginForm(forms.Form):
 
         #def login(self, request, redirect_url=None):
         #    pass
-my_default_phone_number_errors = {
+my_default_sign_up_phone_number_errors = {
     'required': 'This field is required',
     'invalid': 'Enter a 10-digit phone number below.'
+}
+my_default_change_phone_number_errors = {
+    'required': 'This field is required',
+    'invalid': 'Your new phone number must be exactly 10-digit long'
 }
 class PhoneChangeForm(forms.Form):
 
     phone = forms.IntegerField(
+            error_messages=my_default_change_phone_number_errors,
             label = 'New Phone Number',
             widget=forms.TextInput(
             attrs={'placeholder': '10-digit phone number'}),
@@ -33,7 +38,7 @@ class PhoneChangeForm(forms.Form):
 class CustomUserCreationForm(forms.Form):
 
     phone = forms.IntegerField(
-            error_messages=my_default_phone_number_errors,
+            error_messages=my_default_sign_up_phone_number_errors,
             label = 'Phone Number',
             widget=forms.TextInput(
             attrs={'placeholder': '10-digit phone number'}),
