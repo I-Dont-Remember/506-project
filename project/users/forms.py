@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from .models import CustomUser
 from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
 
 class CustomLoginForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -24,7 +25,8 @@ class PhoneChangeForm(forms.Form):
             label = 'New Phone Number',
             widget=forms.TextInput(
             attrs={'placeholder': '10-digit phone number'}),
-            validators=[MaxValueValidator(9999999999)]
+            validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)]
+
     )
 
     def save(self, commit=True):
@@ -42,7 +44,7 @@ class CustomUserCreationForm(forms.Form):
             label = 'Phone Number',
             widget=forms.TextInput(
             attrs={'placeholder': '10-digit phone number'}),
-            validators=[MaxValueValidator(9999999999)]
+            validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)]
 
     )
 
