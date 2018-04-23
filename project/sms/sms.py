@@ -31,13 +31,13 @@ def receive(request):
     # EXAMPLE USING TWILIO
     # parse the http request to get message content
     phone = request.POST.get('From', '')
-    body = request.POST.get('Body', '').split(',')
+    body = request.POST.get('Body', '')
     app = body[0]
-    data = body[1]
+    data = body[1:]
 
     # try matching a user to the phone number
     try:
-        user = CustomUser.objects.get(phone=phone[2:])
+        user = CustomUser.objects.filter(phone=phone[2:]).first()
     except ObjectDoesNotExist:
         user = None
 
@@ -81,12 +81,20 @@ def send(user, app, data):
         settings.TWILIO_AUTH_TOKEN
     )
 
-    # send the text
-    message = client.messages.create(
-        to=user.phone,
-        from_=user.twilio_phone,
-        body="{}{}".format(app.code,data),
-    )
+    n = 150
+    parsed_data = [data[i:i+n] for i in range(0, len(data), n)]
+    total = len(parsed_data)
+    current = 1
+    for text in parsed_data:
+
+        # send the text
+        message = client.messages.create(
+            to=user.phone,
+            from_=user.twilio_phone,
+            body="{}{}{}{}".format(app.code,current,total,text),
+        )
+    
+        current += 1
 
     # create and save a db instance for our records
     new_message = MessageSent(

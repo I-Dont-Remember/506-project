@@ -9,7 +9,7 @@ forecast_key = "9acf53a7de55294989b3f3904e8a8d57"
 msf = MySportsFeeds(version="1.2", store_type=None, store_location=None)
 msf.authenticate("kvanderheiden", "lucidata506")
 
-MAX_CHAR = 156
+MAX_CHAR = 500
 
 cli = googlemaps.Client(key=gmaps_key)
 
