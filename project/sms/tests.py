@@ -147,7 +147,7 @@ class TestAPI(TestCase):
         self.app.name = 'sports'
         league = 'b'
         date = '20180423'
-        scoreboard = ('HOU;MIN;8:00PM/OKL;UTA;10:30PM')
+        scoreboard = ('HOU;MIN;f;119;100/OKL;UTA;f;96;113')
         self.assertEqual(scoreboard, sports_handler(league + date))
 
         #test a day where there are no games for the given league
