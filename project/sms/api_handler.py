@@ -39,7 +39,7 @@ def wiki_handler(data):
     # retreive data
     try:
         response = wikipedia.summary(data)
-    except wikipedia.exceptions.PageError:
+    except:
         response = "No Wikipedia entry found for " + data
 
     # cut off data at max text length
