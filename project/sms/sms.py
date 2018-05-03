@@ -18,7 +18,8 @@ from .api_handler import api_handler
 from users.models import CustomUser
 
 
-@twilio_view
+#twilio_view
+@csrf_exempt
 def receive(request):
     '''
     This is the webhook given to the sms provider, and expects a POST
@@ -86,14 +87,15 @@ def send(user, app, data):
     total = len(parsed_data)
     current = 1
     for text in parsed_data:
-
+        #print ('To: ' + user.phone + ' Message: ' + body)
         # send the text
         message = client.messages.create(
             to=user.phone,
             from_=user.twilio_phone,
             body="{}{}{}{}".format(app.code,current,total,text),
         )
-    
+        body = "{}{}{}{}".format(app.code,current,total,text)
+        print ('To: ' + user.phone + ' Message: ' + body)
         current += 1
 
     # create and save a db instance for our records
